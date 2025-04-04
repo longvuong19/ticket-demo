@@ -202,7 +202,7 @@ export default function Home() {
             name="typeOfClass"
             render={({ field }) => {
               return (
-                <FormItem className="flex items-center justify-between">
+                <FormItem className="">
                   <FormLabel>Hạng vé</FormLabel>
                   <Select onValueChange={field.onChange}>
                     <FormControl>
