@@ -29,14 +29,22 @@ const formSchema = z.object({
     .max(50, "Tên chứa tối đa 50 ký tự.")
     .regex(/^[a-zA-Z\s]+$/, "Tên không được chứa chữ số hay kí tự đặc biệt."),
 
+  // address: z
+  //   .string()
+  //   .max(2000, "Địa chỉ chỉ được chứa tối đa 2000 ký tự.")
+  //   .regex(
+  //     /^[a-zA-Z0-9\s,]+$/,
+  //     "Địa chỉ chỉ được chứa chữ cái, số, khoảng trắng và dấu phẩy."
+  //   )
+  //   .optional(),
+
   address: z
     .string()
     .max(2000, "Địa chỉ chỉ được chứa tối đa 2000 ký tự.")
-    .regex(
-      /^[a-zA-Z0-9\s,]+$/,
-      "Địa chỉ chỉ được chứa chữ cái, số, khoảng trắng và dấu phẩy."
-    )
-    .optional(),
+    .optional()
+    .refine((val) => !val || /^[a-zA-Z0-9\s,]+$/.test(val), {
+      message: "Địa chỉ chỉ được chứa chữ cái, số, khoảng trắng và dấu phẩy.",
+    }),
 
   idCard: z
     .string()
@@ -127,7 +135,10 @@ export default function Home() {
             render={({ field }) => {
               return (
                 <FormItem>
-                  <FormLabel>Tên</FormLabel>
+                  <FormLabel>
+                    Tên
+                    <span style={{ color: "red" }}>*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Nhập tên của bạn"
@@ -165,7 +176,10 @@ export default function Home() {
             render={({ field }) => {
               return (
                 <FormItem>
-                  <FormLabel>Số CCCD/CMND</FormLabel>
+                  <FormLabel>
+                    Số CCCD/CMND
+                    <span style={{ color: "red" }}>*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Nhập số CCCD/CMND của bạn"
@@ -184,7 +198,10 @@ export default function Home() {
             render={({ field }) => {
               return (
                 <FormItem>
-                  <FormLabel>Ngày tháng năm sinh</FormLabel>
+                  <FormLabel>
+                    Ngày tháng năm sinh
+                    <span style={{ color: "red" }}>*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Nhập ngày sinh của bạn"
