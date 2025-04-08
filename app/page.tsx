@@ -58,10 +58,27 @@ const formSchema = z.object({
         const [day, month, year] = val.split("/").map(Number);
         const birthDate = new Date(year, month - 1, day);
         const today = new Date();
-        return birthDate <= today;
+
+        if (birthDate > today) return false;
+
+        return true;
       },
       {
         message: "Ngày sinh không được nằm trong tương lai.",
+      }
+    )
+    .refine(
+      (val) => {
+        const [day, month, year] = val.split("/").map(Number);
+        const maxDay = new Date(year, month, 0).getDate();
+
+        // Nếu ngày vượt quá số ngày tối đa trong tháng => không hợp lệ
+        if (day > maxDay) return false;
+
+        return true;
+      },
+      {
+        message: "Ngày tháng năm sinh không hợp lệ.",
       }
     ),
 
