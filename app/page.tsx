@@ -73,14 +73,15 @@ export default function Home() {
   const calculateAge = (
     dateOfBirth: string
   ): { age: number; clientStatus: string } => {
-    const [year] = dateOfBirth.split("/").map(Number);
-    const currentYear = new Date().getFullYear();
-    let age = 0;
+    const [day, month, year] = dateOfBirth.split("/").map(Number);
+    const birthDate = new Date(year, month - 1, day);
+    const today = new Date();
 
-    if (currentYear > year) {
-      age = currentYear - year;
-    } else if (currentYear === year) {
-      age = 1;
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
     }
 
     const clientStatus = age > 7 ? "adult" : "children";
