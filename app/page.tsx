@@ -32,15 +32,15 @@ const formSchema = z.object({
   address: z
     .string()
     .max(200, "Địa chỉ chỉ được chứa tối đa 200 ký tự.")
-    .optional()
-    .refine((value) => !value || /^[a-zA-Z0-9\s,]+$/.test(value), {
-      message: "Địa chỉ chỉ được chứa chữ cái, số, khoảng trắng và dấu phẩy.",
-    }),
+    .regex(/^[a-zA-Z0-9\s,\.]*$/, {
+      message: "Địa chỉ không được chứa ký tự đặc biệt.",
+    })
+    .optional(),
 
   idCard: z
     .string()
     .min(1, "Yêu cầu nhập số ID.")
-    .length(9, "ID chỉ bao gồm 9 ký tự.")
+    .length(9, "ID chỉ bao gồm 9 ký tự là chữ số.")
     .regex(
       /^\d{9}$/,
       "ID chỉ được chứa số, không có khoảng trắng hoặc ký tự đặc biệt."
@@ -48,10 +48,10 @@ const formSchema = z.object({
 
   dateOfBirth: z
     .string()
-    .min(1, "Yêu cầu nhập ngày sinh.")
+    .min(1, "Yêu cầu nhập ngày tháng năm sinh.")
     .regex(
       /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/,
-      "Ngày sinh không hợp lệ, định dạng phải là dd/mm/yyyy."
+      "Ngày sinh không hợp lệ, định dạng yêu cầu là dd/mm/yyyy."
     ),
 
   typeOfClass: z.enum(["economy", "business"], {
