@@ -122,6 +122,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-items-center p-24">
       <Form {...form}>
         <form
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
           onSubmit={form.handleSubmit(handleSubmit)}
           className="max-w-md w-full flex flex-col gap-4"
         >
@@ -247,7 +248,7 @@ export default function Home() {
             )}
           </div>
           <Button
-            type="button"
+            type="submit"
             className="w-full cursor-pointer"
             onClick={() => {
               handleSubmit(form.getValues());
