@@ -247,7 +247,7 @@ export default function Home() {
             )}
           </div>
           <Button
-            type="submit"
+            type="button"
             className="w-full cursor-pointer"
             onClick={() => {
               handleSubmit(form.getValues());
