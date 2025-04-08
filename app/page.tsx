@@ -52,6 +52,17 @@ const formSchema = z.object({
     .regex(
       /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/,
       "Ngày sinh không hợp lệ, định dạng yêu cầu là dd/mm/yyyy."
+    )
+    .refine(
+      (val) => {
+        const [day, month, year] = val.split("/").map(Number);
+        const birthDate = new Date(year, month - 1, day);
+        const today = new Date();
+        return birthDate <= today;
+      },
+      {
+        message: "Ngày sinh không được nằm trong tương lai.",
+      }
     ),
 
   typeOfClass: z.enum(["economy", "business"], {
@@ -78,16 +89,17 @@ export default function Home() {
     const today = new Date();
 
     let age = today.getFullYear() - birthDate.getFullYear();
-    const m = today.getMonth() - birthDate.getMonth();
 
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-    } else {
+    const hasBirthdayPassedThisYear =
+      today.getMonth() > birthDate.getMonth() ||
+      (today.getMonth() === birthDate.getMonth() &&
+        today.getDate() >= birthDate.getDate());
+
+    if (!hasBirthdayPassedThisYear) {
       age--;
     }
 
-    if (today.getFullYear() === year) {
-      age = 1;
-    }
+    age = Math.max(age + 1, 1);
 
     const clientStatus = age > 7 ? "adult" : "children";
     return { age, clientStatus };
