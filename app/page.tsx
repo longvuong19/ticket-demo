@@ -81,7 +81,11 @@ export default function Home() {
     const m = today.getMonth() - birthDate.getMonth();
 
     if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
+      age;
+    }
+
+    if (today.getFullYear() === year) {
+      age = 1;
     }
 
     const clientStatus = age > 7 ? "adult" : "children";
