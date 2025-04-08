@@ -31,7 +31,7 @@ const formSchema = z.object({
 
   address: z
     .string()
-    .max(2000, "Địa chỉ chỉ được chứa tối đa 2000 ký tự.")
+    .max(200, "Địa chỉ chỉ được chứa tối đa 200 ký tự.")
     .optional()
     .refine((value) => !value || /^[a-zA-Z0-9\s,]+$/.test(value), {
       message: "Địa chỉ chỉ được chứa chữ cái, số, khoảng trắng và dấu phẩy.",
