@@ -29,20 +29,11 @@ const formSchema = z.object({
     .max(50, "Tên chứa tối đa 50 ký tự.")
     .regex(/^[a-zA-Z\s]+$/, "Tên không được chứa chữ số hay kí tự đặc biệt."),
 
-  // address: z
-  //   .string()
-  //   .max(2000, "Địa chỉ chỉ được chứa tối đa 2000 ký tự.")
-  //   .regex(
-  //     /^[a-zA-Z0-9\s,]+$/,
-  //     "Địa chỉ chỉ được chứa chữ cái, số, khoảng trắng và dấu phẩy."
-  //   )
-  //   .optional(),
-
   address: z
     .string()
     .max(2000, "Địa chỉ chỉ được chứa tối đa 2000 ký tự.")
     .optional()
-    .refine((val) => !val || /^[a-zA-Z0-9\s,]+$/.test(val), {
+    .refine((value) => !value || /^[a-zA-Z0-9\s,]+$/.test(value), {
       message: "Địa chỉ chỉ được chứa chữ cái, số, khoảng trắng và dấu phẩy.",
     }),
 
@@ -220,7 +211,10 @@ export default function Home() {
             render={({ field }) => {
               return (
                 <FormItem className="">
-                  <FormLabel>Hạng vé</FormLabel>
+                  <FormLabel>
+                    Hạng vé
+                    <span style={{ color: "red" }}>*</span>
+                  </FormLabel>
                   <Select onValueChange={field.onChange}>
                     <FormControl>
                       <SelectTrigger>
