@@ -39,7 +39,7 @@ const formSchema = z.object({
 
   idCard: z
     .string()
-    .min(1, "Yêu cầu nhập số ID.")
+    .min(1, "Yêu cầu nhập số CCCD/CMND.")
     .length(9, "ID chỉ bao gồm 9 ký tự là chữ số.")
     .regex(
       /^\d{9}$/,
